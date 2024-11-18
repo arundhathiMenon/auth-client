@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { MsalProvider } from "@azure/msal-react";
+import { msalInstance } from "./utility/msalInstance";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <MsalProvider instance={msalInstance}>
   <React.StrictMode>
     <App />
   </React.StrictMode>
+</MsalProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
