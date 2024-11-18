@@ -10,8 +10,9 @@ function Home() {
 
   // Extract msUserId from query parameters
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = new URLSearchParams(window.location.search);
     const userId = searchParams.get("msUserId");
+    console.log("userId___", userId);
     setMsUserId(userId);
   }, [location]);
 
