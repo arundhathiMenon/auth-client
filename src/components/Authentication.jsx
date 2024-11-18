@@ -1,39 +1,30 @@
-import React from "react";
-import { useState } from "react";
-import Login from "./Login.jsx";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Login from "./Login";
+import AuthSuccess from "./AuthSuccess";
 
-export default function Authentication() {
-  const [accessToken, setAccessToken] = useState(
-    ""
-    // "..-9CAae32Z0Xs2AAZEEIX_EUityfTBEvdkE6EUoV1ZMmcLwF627vz2EumXTvJDOIpzznSMAQOz9RRURS7jD4rpC2YkQlnEkS4fqVtTHRIqlqd9aIybYsGkmHGB3-rgQrjJW4rX7OZBNYa5mLznZ_DbByTaRKszq_G60gAEdcuHE0T9IkhbNToIeQ-M_7Q"
-  );
-  const [sharedFolderUrl, setSharedFolderUrl] = useState("");
-  const [submittedUrl, setSubmittedUrl] = useState("");
+function Home() {
+  const [authSuccess, setAuthSuccess] = useState(false);
+  const location = useLocation();
+  const [msUserId, setMsUserId] = useState(null);
 
-  const handleLoginSuccess = (token) => {
-    setAccessToken(token);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmittedUrl(sharedFolderUrl);
-  };
+  // Extract msUserId from query parameters
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const userId = searchParams.get("msUserId");
+    setMsUserId(userId);
+  }, [location]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">
-     Ethara authentication
-      </h1>
-
-      {!accessToken ? (
-        <Login onSuccess={handleLoginSuccess} setAccessToken={setAccessToken} />
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-3xl font-bold mb-8">Ethara - Tune One Drive Authentication</h1>
+      {!authSuccess ? (
+        <Login setAuthSuccess={setAuthSuccess} msUserId={msUserId} />
       ) : (
-        <>
-          <h1 className="text-3xl font-bold mb-6 text-gray-800">
-            Authentication successful! You can close this window
-          </h1>
-        </>
+        <AuthSuccess />
       )}
     </div>
   );
 }
+
+export default Home;

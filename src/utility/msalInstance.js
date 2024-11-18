@@ -2,7 +2,7 @@ import { PublicClientApplication } from "@azure/msal-browser";
 
 const msalConfig = {
     auth: {
-        clientId: "2d988fb6-911d-4f89-96f1-9baf53d7954c",
+        clientId: process.env.APP_ID,
         authority: `https://login.microsoftonline.com/common`,
         redirectUri: "http://localhost:3000",
     },
